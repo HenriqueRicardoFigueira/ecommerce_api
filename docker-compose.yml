@@ -71,6 +71,9 @@ services:
   bff:
     build: ./bff
     container_name: bff
+    depends_on:
+      - mysql
+      - kafka
     networks:
       - ecommerce-network
     ports:
@@ -82,6 +85,9 @@ services:
   payments:
     build: ./payments
     container_name: payments
+    depends_on:
+      - mysql
+      - kafka
     networks:
       - ecommerce-network
     ports:
