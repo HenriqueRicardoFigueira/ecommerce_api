@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE `Order` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `total` DOUBLE NOT NULL,
