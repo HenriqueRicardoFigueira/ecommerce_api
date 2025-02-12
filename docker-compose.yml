@@ -70,11 +70,23 @@ services:
 
   bff:
     build: ./bff
+    container_name: bff
     networks:
       - ecommerce-network
     ports:
       - 3000:3000
     command: sh -c "cd /home/node/app/bff && npx prisma migrate dev && npm run start:dev"
+    volumes:
+      - .:/home/node/app
+
+  payments:
+    build: ./payments
+    container_name: payments
+    networks:
+      - ecommerce-network
+    ports:
+      - 3001:3001
+    command: sh -c "cd /home/node/app/payments && npm run start:dev"
     volumes:
       - .:/home/node/app
 
