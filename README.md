@@ -10,3 +10,4 @@ Referências:
 - https://github.com/devfullcycle/live-imersao-13-nestjs-kafka
 - https://www.youtube.com/watch?v=z87Yo6j_iK8
 - https://victorfjansen.com/bffs-pra-tratativa-de-dados-com-nestjs-dbfde05bdce8
+- https://dev.to/chukwutosin_/step-by-step-guide-setting-up-a-nestjs-application-with-docker-and-postgresql-5hei
