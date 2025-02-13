@@ -1,10 +1,10 @@
 FROM node:20-slim
-WORKDIR /home/node/app/payments
 
 RUN apt-get update && apt-get install -y --no-install-recommends openssl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+WORKDIR /home/node/app/checkout
 
 COPY package*.json ./
 RUN npm install
@@ -13,5 +13,6 @@ RUN npm install
 COPY . .
 
 RUN npx prisma generate
+
 
 CMD ["npm", "run", "start:dev"]

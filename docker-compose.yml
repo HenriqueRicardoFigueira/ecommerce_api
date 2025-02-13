@@ -88,9 +88,9 @@ services:
     volumes:
       - ./.docker/mysql:/docker-entrypoint-initdb.d
 
-  bff:
-    build: ./bff
-    container_name: bff
+  checkout:
+    build: ./checkout
+    container_name: checkout
     depends_on:
       mysql:
         condition: service_healthy
@@ -101,7 +101,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./bff:/home/node/app/bff
+      - ./checkout:/home/node/app/checkout
+      - /home/node/app/checkout/node_modules
 
   payments:
     build: ./payments
@@ -117,6 +118,7 @@ services:
       - 3001:3001
     volumes:
       - ./payments:/home/node/app/payments
+      - /home/node/app/payments/node_modules
 
 networks:
   ecommerce-network:

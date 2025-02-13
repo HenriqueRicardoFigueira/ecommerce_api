@@ -9,7 +9,7 @@ import { lastValueFrom } from 'rxjs';
 export class AppService {
   constructor(
     private prisma: PrismaService,
-    @Inject('BFF_SERVICE')
+    @Inject('CHECKOUT_SERVICE')
     private kafkaClient: ClientKafka
   ) {}
 

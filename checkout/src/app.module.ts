@@ -9,11 +9,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     PrismaModule,
     ClientsModule.register([
       {
-        name: 'BFF_SERVICE',
+        name: 'CHECKOUT_SERVICE',
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: 'bff',
+            clientId: 'checkout',
             brokers: ['kafka:29092'],
           },
         },
