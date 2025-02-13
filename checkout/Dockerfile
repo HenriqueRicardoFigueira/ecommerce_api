@@ -1,14 +1,12 @@
 FROM node:20-slim
+WORKDIR /home/node/app/checkout
 
 RUN apt-get update && apt-get install -y --no-install-recommends openssl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/node/app/checkout
-
 COPY package*.json ./
 RUN npm install
-
 
 COPY . .
 

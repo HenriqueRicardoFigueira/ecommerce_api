@@ -27,4 +27,15 @@ export class AppService {
      await lastValueFrom(this.kafkaClient.emit('order_created', order));
      return order;
   }
+
+  async update_order_status(data){
+    await this.prisma.order.update({
+      where: {
+        id: data.order_id
+      },
+      data: {
+        status: data.status == 'PAID' ? OrderStatus.PAID : OrderStatus.CANCELLED
+      }
+    });
+  }
 }
