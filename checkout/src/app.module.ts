@@ -19,7 +19,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
-
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -29,6 +29,10 @@ export class AppService {
   }
 
   async update_order_status(data){
+    if(data.status == 'PAID'){
+      await lastValueFrom(this.kafkaClient.emit('order_paid', data));
+    }
+    
     await this.prisma.order.update({
       where: {
         id: data.order_id

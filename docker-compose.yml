@@ -120,6 +120,22 @@ services:
       - ./payments:/home/node/app/payments
       - /home/node/app/payments/node_modules
 
+  expeditions:
+    build: ./expeditions
+    container_name: expeditions
+    depends_on:
+      mysql:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+    ports:
+      - 3002:3002
+    volumes:
+      - ./expeditions:/home/node/app/expeditions
+      - /home/node/app/expeditions/node_modules
+
 networks:
   ecommerce-network:
     driver: bridge
