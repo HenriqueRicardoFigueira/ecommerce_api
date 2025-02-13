@@ -7,6 +7,12 @@ services:
     container_name: zookeeper
     networks:
       - ecommerce-network
+    healthcheck:
+      test: ["CMD", "echo", "ruok", "|", "nc", "localhost", "2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     ports:
       - "2181:2181"
     environment:
@@ -18,9 +24,16 @@ services:
     hostname: kafka
     container_name: kafka
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     networks:
       - ecommerce-network
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     ports:
       - "9092:9092"
       - "9094:9094"
@@ -43,7 +56,8 @@ services:
     hostname: control-center
     container_name: control-center
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     networks:
       - ecommerce-network
     ports:
@@ -63,6 +77,12 @@ services:
       - ecommerce-network
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
@@ -72,29 +92,31 @@ services:
     build: ./bff
     container_name: bff
     depends_on:
-      - mysql
-      - kafka
+      mysql:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
     networks:
       - ecommerce-network
     ports:
       - 3000:3000
-    command: sh -c "cd /home/node/app/bff && npx prisma migrate dev && npm run start:dev"
     volumes:
-      - .:/home/node/app
+      - ./bff:/home/node/app/bff
 
   payments:
     build: ./payments
     container_name: payments
     depends_on:
-      - mysql
-      - kafka
+      mysql:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
     networks:
       - ecommerce-network
     ports:
       - 3001:3001
-    command: sh -c "cd /home/node/app/payments && npm run start:dev"
     volumes:
-      - .:/home/node/app
+      - ./payments:/home/node/app/payments
 
 networks:
   ecommerce-network:

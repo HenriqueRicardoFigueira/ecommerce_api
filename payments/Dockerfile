@@ -1,11 +1,11 @@
 FROM node:20-slim
 
-RUN apt-get update -y && apt-get install -y openssl
+RUN apt-get update && apt-get install -y openssl
 
-WORKDIR /home/node/app
+WORKDIR /home/node/app/payments
 
-COPY .env .env
+COPY . .
 
-USER node
+RUN npm install
 
-CMD [ "tail", "-f", "/dev/null" ]
+CMD ["npm", "run", "start:dev"]
