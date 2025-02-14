@@ -20,7 +20,7 @@ export class AppService {
       return response.data;
     } catch (error) {
       throw new HttpException(
-        error.response?.data || 'Erro na API externa',
+        error.response?.data || 'Erro ao buscar pedidos',
         error.response?.status || 500,
       );
     }
@@ -36,7 +36,7 @@ export class AppService {
       return response.data;
     } catch (error) {
       throw new HttpException(
-        error.response?.data || 'Erro na API externa',
+        error.response?.data || 'Erro ao criar pedido',
         error.response?.status || 500,
       );
     }

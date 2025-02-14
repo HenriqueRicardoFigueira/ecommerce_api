@@ -50,7 +50,7 @@ ecommerce_api/
   ```
 
 Isso irá iniciar os seguintes serviços:
-- BFF rodando na porta **3000**
+- BFF rodando na porta **3003**
 - Kafka e Zookeeper
 - MySQL rodando na porta **3306**
 - Serviço Checkout
@@ -63,9 +63,7 @@ Isso irá iniciar os seguintes serviços:
 Faça uma requisição **POST** para criar um pedido:
 
 ```bash
-curl --location --request POST 'http://localhost:3003/checkout' \
---header 'Content-Type: application/json' \
---data-raw '{
+curl --location --request POST 'http://localhost:3003/checkout' --header 'Content-Type: application/json' --data-raw '{
   "total": 150.00,
   "client_id": 1,
   "item": "item",
@@ -133,6 +131,18 @@ curl --location --request GET 'http://localhost:3003/checkout'
 ]
 ```
 
+### 🔹 Consultar Pagamentos
+
+```bash
+curl --location --request GET 'http://localhost:3001/payments'
+```
+
+### 🔹 Consultar Expedições
+
+```bash
+curl --location --request GET 'http://localhost:3002/expeditions'
+```
+
 ❌ **Possíveis Erros:**
 | Código | Motivo                | Exemplo de Resposta                                 |
 |--------|------------------------|------------------------------------------------------|
@@ -141,10 +151,12 @@ curl --location --request GET 'http://localhost:3003/checkout'
 ---
 
 ### ✅ Resumo dos Endpoints Disponíveis
-| Método | Rota             | Descrição                        |
-|--------|-------------------|------------------------------------|
-| `POST` | `/checkout`       | Criar um novo pedido              |
-| `GET`  | `/checkout`       | Listar todos os pedidos           |
+| Método | Rota                      | Serviço       | Descrição                        |
+|--------|----------------------------|---------------|------------------------------------|
+| `POST` | `/checkout`                | BFF           | Criar um novo pedido              |
+| `GET`  | `/checkout`                | BFF           | Listar todos os pedidos           |
+| `GET`  | `/payments`                | Payments      | Listar pagamentos                 |
+| `GET`  | `/expeditions`             | Expeditions   | Listar expedições                 |
 
 ---
 
@@ -163,6 +175,7 @@ npm run test:e2e
 
 - Criar pedidos
 - Listar pedidos
+- Consultar pagamentos e expedições
 - Comunicação assíncrona entre serviços via Kafka
 - Persistência de dados em MySQL
 
