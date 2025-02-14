@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
 import { OrderDto } from './order.dto';
 
@@ -19,7 +19,10 @@ export class AppService {
 
       return response.data;
     } catch (error) {
-      console.log(error);
+      throw new HttpException(
+        error.response?.data || 'Erro na API externa',
+        error.response?.status || 500,
+      );
     }
   }
 
@@ -32,7 +35,10 @@ export class AppService {
 
       return response.data;
     } catch (error) {
-      console.log(error);
+      throw new HttpException(
+        error.response?.data || 'Erro na API externa',
+        error.response?.status || 500,
+      );
     }
   } 
 }

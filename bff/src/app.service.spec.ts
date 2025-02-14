@@ -47,7 +47,7 @@ describe('AppService', () => {
   });
 
   it('create new order', async () => {
-    const dto: OrderDto = { total: 250 };
+    const dto: OrderDto = { total: 250, client_id: 1, item: 'item', item_id: 1, quantity: 1 };
     const mockOrder = { id: 1, ...dto };
 
     const mockResponse: AxiosResponse = {
@@ -83,7 +83,7 @@ describe('AppService', () => {
   });
 
   it('return undefined if fail', async () => {
-    const dto: OrderDto = { total: 300 };
+    const dto: OrderDto = { total: 300, client_id: 1, item: 'item', item_id: 1, quantity: 1 };
 
     jest.spyOn(httpService, 'post').mockReturnValue(
       throwError(() => new Error('Erro ao criar pedido')),

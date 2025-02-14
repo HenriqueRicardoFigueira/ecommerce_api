@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 import { OrderDto } from './order.dto';
 
@@ -12,6 +12,7 @@ export class AppController {
   }
 
   @Post()
+  @UsePipes(new ValidationPipe())
   create(@Body() data: OrderDto) {
     return this.appService.create_order(data);
   }

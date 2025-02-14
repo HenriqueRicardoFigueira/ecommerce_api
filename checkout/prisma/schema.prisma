@@ -17,12 +17,16 @@ model Order {
   id        Int   @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  client_id Int
+  item_id  Int
+  quantity  Int
+  item     String
   total     Float
   status   OrderStatus
 }
 
 enum OrderStatus {
-  CART
+  PENDING
   PAID
   SENT
   CANCELLED

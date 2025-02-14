@@ -21,7 +21,7 @@ export class AppService {
     const order = await this.prisma.order.create({ 
       data: {
         ...data,
-        status: OrderStatus.CART
+        status: OrderStatus.PENDING
       },
      });
      await lastValueFrom(this.kafkaClient.emit('order_created', order));

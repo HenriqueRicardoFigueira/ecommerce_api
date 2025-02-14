@@ -1,9 +1,5 @@
-FROM node:20-slim
+FROM node:20
 WORKDIR /home/node/app/bff
-
-RUN apt-get update && apt-get install -y --no-install-recommends openssl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 RUN npm install

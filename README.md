@@ -56,6 +56,98 @@ Isso irá iniciar os seguintes serviços:
 - Serviço Checkout
 - Control Center do Kafka na porta **9021**
 
+## 🛒 Como Usar
+
+### 🔹 Criar um Pedido
+
+Faça uma requisição **POST** para criar um pedido:
+
+```bash
+curl --location --request POST 'http://localhost:3003/checkout' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "total": 150.00,
+  "client_id": 1,
+  "item": "item",
+  "quantity": 1,
+  "item_id": 10
+}'
+```
+
+🔄 **Resposta de Sucesso (201 Created):**
+```json
+{
+  "id": 2,
+  "createdAt": "2025-02-14T19:40:53.346Z",
+  "updatedAt": "2025-02-14T19:40:53.346Z",
+  "client_id": 1,
+  "item_id": 10,
+  "quantity": 1,
+  "item": "item",
+  "total": 150,
+  "status": "PENDING"
+}
+```
+
+❌ **Possíveis Erros:**
+| Código | Motivo                | Exemplo de Resposta                                      |
+|--------|------------------------|-----------------------------------------------------------|
+| `500`  | Erro interno na API    | `{ "statusCode": 500, "message": "Erro ao criar pedido" }` |
+| `400`  | Erro de validação      | `{ "statusCode": 400, "message": "Bad Request" }` |
+
+---
+
+### 🔹 Consultar Pedidos e seus Status
+
+Faça uma requisição **GET** para listar os pedidos:
+
+```bash
+curl --location --request GET 'http://localhost:3003/checkout'
+```
+
+🔄 **Resposta de Sucesso (200 OK):**
+```json
+[
+  {
+    "id": 1,
+    "createdAt": "2025-02-14T19:40:35.515Z",
+    "updatedAt": "2025-02-14T19:40:40.605Z",
+    "client_id": 1,
+    "item_id": 10,
+    "quantity": 1,
+    "item": "item",
+    "total": 150,
+    "status": "CANCELLED"
+  },
+  {
+    "id": 2,
+    "createdAt": "2025-02-14T19:40:53.346Z",
+    "updatedAt": "2025-02-14T19:40:53.366Z",
+    "client_id": 1,
+    "item_id": 10,
+    "quantity": 1,
+    "item": "item",
+    "total": 150,
+    "status": "PAID"
+  }
+]
+```
+
+❌ **Possíveis Erros:**
+| Código | Motivo                | Exemplo de Resposta                                 |
+|--------|------------------------|------------------------------------------------------|
+| `500`  | Erro interno na API    | `{ "statusCode": 500, "message": "Erro ao buscar pedidos" }` |
+
+---
+
+### ✅ Resumo dos Endpoints Disponíveis
+| Método | Rota             | Descrição                        |
+|--------|-------------------|------------------------------------|
+| `POST` | `/checkout`       | Criar um novo pedido              |
+| `GET`  | `/checkout`       | Listar todos os pedidos           |
+
+---
+
 ## 🧪 Testes
 
 Dentro de cada microserviço, você pode rodar os testes com:
@@ -75,7 +167,7 @@ npm run test:e2e
 - Persistência de dados em MySQL
 
 
-## 📚 Referẽncias
+## 📚 Referências
 
 - https://docs.nestjs.com/
 - https://github.com/confluentinc/cp-all-in-one/blob/7.8.0-post/cp-all-in-one/docker-compose.yml
@@ -87,5 +179,3 @@ npm run test:e2e
 ## 🧑‍💻 Autor
 
 [Henrique Ricardo Figueira](https://github.com/HenriqueRicardoFigueira)
-
----

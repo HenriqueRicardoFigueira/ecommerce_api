@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, HttpCode, HttpStatus, HttpException} from '@nestjs/common';
 import { AppService } from './app.service';
 import { OrderDto } from './order.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -13,8 +13,20 @@ export class AppController {
   }
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() data: OrderDto) {
-    return this.appService.create(data);
+    try{
+
+      return this.appService.create(data);
+    }catch(e){
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: e.message || 'Erro ao criar pedido',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @MessagePattern('payment_created')
